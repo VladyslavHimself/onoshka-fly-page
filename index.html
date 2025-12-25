@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Onoshka page</title>
+    <style>
+
+        body {
+            background-color: #aa00ff;
+        }
+        div {
+        }
+
+        .knopka {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #0a0a0a;
+            border: 1px solid pink;
+            color: white;
+
+            padding-bottom: 2px;
+
+            border-radius: 90px;
+            z-index: 999;
+
+            /*animation: rotate 2s infinite linear;*/
+
+            transition: all .5s ease;
+        }
+
+        .knopka span {
+            /*border: 1px solid red;*/
+            /*animation: rotate 1s infinite linear reverse;*/
+        }
+
+        .knopka:hover {
+            background-color: pink;
+            /*animation: rotate .5s infinite linear;*/
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            } to {
+                  transform: rotate(360deg);
+              }
+        }
+
+        @keyframes slide {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-50px);
+            }
+        }
+
+        .ua-text {
+            /*background: linear-gradient(*/
+            /*        180deg,*/
+            /*        #003cff 0%,*/
+            /*        #5181ff 58%,*/
+            /*        #ffd700 52%,*/
+            /*        #ffd700 100%*/
+            /*);*/
+
+            color: black;
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ua-text {
+            background: linear-gradient(90deg, #ff00f8 50%, #ff0055 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: black;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<button onclick="" class="knopka">
+        <span class="ua-text">
+        оношка
+        </span>
+
+</button>
+
+<image class="fly" width="25" height="25" src="https://emojiguide.org/images/emoji/r/wf8adw1gdyt4r.png" />
+
+<script>
+    const fly = document.querySelector('.fly');
+
+    fly.style.position = 'fixed';
+    fly.style.pointerEvents = 'none';
+
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight;
+
+    let vx = (Math.random() - 0.5) * 4;
+    let vy = (Math.random() - 0.5) * 4;
+
+    function animate() {
+        // легкий хаос — мікрозміни напрямку
+        vx += (Math.random() - 0.5) * 0.2;
+        vy += (Math.random() - 0.5) * 0.2;
+
+        // обмежуємо швидкість
+        const maxSpeed = 5;
+        const speed = Math.hypot(vx, vy);
+        if (speed > maxSpeed) {
+            vx = (vx / speed) * maxSpeed;
+            vy = (vy / speed) * maxSpeed;
+        }
+
+        x += vx;
+        y += vy;
+
+        // відскок від країв екрану
+        if (x < 0 || x > window.innerWidth) vx *= -1;
+        if (y < 0 || y > window.innerHeight) vy *= -1;
+
+        // поворот по напрямку руху
+        const angle = Math.atan2(vy, vx) * (180 / Math.PI);
+
+        fly.style.transform = `
+      translate(${x}px, ${y}px)
+      rotate(${angle}deg)
+    `;
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+</script>
+</body>
+</html>
